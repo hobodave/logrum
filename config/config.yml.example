@@ -2,4 +2,6 @@ logs:
   - "/private/var/log/*log"
   - "/private/var/log/**/*log"
 
+user: "admin"
+pass: "pass"
 port: 8041

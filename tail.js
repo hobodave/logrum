@@ -39,7 +39,7 @@ actions.push({
 })
 var processes = {}
 
-var server = httpdigest.createServer("admin", "pass", function(req, res) {
+var server = httpdigest.createServer(config.user, config.pass, function(req, res) {
 
   req.addListener('end', function() {
     var action = actions.filter(function(a) { return req.url === a.path });

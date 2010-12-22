@@ -1,0 +1,5 @@
+logs:
+  - "/private/var/log/*log"
+  - "/private/var/log/**/*log"
+
+port: 8081

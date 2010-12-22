@@ -3,9 +3,40 @@
 LogRum is a simple web-based log tailer inspired by [clarity][1] and a 
 desire to satisfy my curiosity in node.js.
 
+# Installation #
+
+## Dependencies ##
+
+
+* node.js
+    * node-glob
+    * http-digest
+    * yaml
+    * socket.io
+    * mustache
+
+## Steps ##
+
+1. npm install glob http-digest yaml socket.io mustache
+2. edit config/config.yml (see config.yml.example)
+3. node tail.js
+
+# Caveats #
+
+* client doesn't purge old lines unless you switch log files
+* doesn't seem to work when socket.io fails over to multixhr or longpolling
+
+# TODO #
+
+* SSL
+* Multi user auth
+* Major cleaning of code
+* grep support
+* pause support
+
 # Attributions & License #
 
-LogRum is released under a BSD License. See LICENSE.
+LogRum is released under a BSD License. See [LICENSE][2].
 
 <hr/>
 
@@ -38,3 +69,4 @@ IN THE SOFTWARE.
 
 
   [1]: https://github.com/tobi/clarity
+  [2]: https://github.com/hobodave/logrum/blob/master/LICENSE

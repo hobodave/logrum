@@ -59,7 +59,7 @@
         return String(msg).replace(/</g, '&lt;').replace(/>/g, '&gt;');
       };
       
-      var socket = new io.Socket(null, {port: 8081, rememberTransport: false});
+      var socket = new io.Socket(null, {port: {{port}}, rememberTransport: false});
       socket.connect();
       socket.on('message', function(obj){
         if ('buffer' in obj){

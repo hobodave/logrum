@@ -33,7 +33,8 @@ actions.push({
   path: "/",
   template: "tail.html",
   view: {
-    log_opts: log_opts
+    log_opts: log_opts,
+    port: config.port
   }
 })
 var processes = {}

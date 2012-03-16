@@ -1,23 +1,23 @@
-var sys = require('sys')
+var util = require('util')
   , fs = require('fs')
   , url = require('url')
   , http = require('http')
   , io = require('socket.io')
-  , yaml = require('yaml')
+  , yaml = require('js-yaml')
   , glob = require('glob')
   , httpdigest = require('http-digest')
   , Mustache = require('mustache')
   , spawn = require('child_process').spawn;
 
 var parseConfig = function(filename) {
-  return yaml.eval(fs.readFileSync(filename, 'utf8'));
+  return yaml.load(fs.readFileSync(filename, 'utf8'));
 }
 
 var config = parseConfig('./config/config.yml')
 
 var logs = []
 for (var i=0; i < config.logs.length; i++) {
-  files = glob.globSync(config.logs[i], 0);
+  files = glob.sync(config.logs[i]);
   for (var j=0; j < files.length; j++) {
     logs.push(files[j]);
   };
@@ -44,7 +44,7 @@ var server = httpdigest.createServer(config.user, config.pass, function(req, res
   req.addListener('end', function() {
     var action = actions.filter(function(a) { return req.url === a.path });
     action = (action.length > 0 ? action[0] : undefined);
-    
+
     if ('undefined' == typeof action) {
       var path = url.parse(req.url).pathname;
       switch (path){
@@ -86,7 +86,7 @@ io.on('connection', function(client){
   var sessionId = client.sessionId;
   var stringdata = '';
   var restdata = '';
-  
+
   processes[sessionId] = {
     active_log: null,
     tail: null

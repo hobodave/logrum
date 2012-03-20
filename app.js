@@ -83,7 +83,9 @@ io.sockets.on('connection', function(client) {
 
   processes[sessionId] = {
     active_log: null,
-    tail: null
+    active_search: null,
+    tail: null,
+    grep: null
   }
 
   var emit_data = function(data, search) {

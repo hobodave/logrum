@@ -7,19 +7,18 @@ desire to satisfy my curiosity in node.js.
 
 ## Dependencies ##
 
-
 * node.js
-    * node-glob
-    * http-digest
-    * yaml
     * socket.io
-    * mustache
+    * express
+    * jade
+    * glob
+    * js-yaml
 
 ## Steps ##
 
-1. npm install glob http-digest yaml socket.io mustache
+1. npm install
 2. edit config/config.yml (see config.yml.example)
-3. node tail.js
+3. node app.js
 
 # Caveats #
 
@@ -30,9 +29,6 @@ desire to satisfy my curiosity in node.js.
 
 * SSL
 * Multi user auth
-* Major cleaning of code
-* grep support
-* pause support
 
 # Attributions & License #
 

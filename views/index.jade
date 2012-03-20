@@ -1,0 +1,59 @@
+doctype 5
+html(lang="en")
+  head
+    title #{title}
+    script(src="/javascripts/jquery-1.7.1.min.js")
+    script(src="/socket.io/socket.io.js")
+    link(rel="stylesheet",href="/stylesheets/style.css")
+  body
+    #toolbar
+      #header
+        h1: a(href="/") LogRum
+      form#form
+        select#log_file(name="log_file")
+          each item in log_opts
+            option(value="#{item.idx}") #{item.name}
+        input(type="submit",value="View/Filter")
+        label(for="auto_scroll") Auto Scroll
+        input#auto_scroll(type="checkbox",name="auto_scroll",value="1",checked)
+        label(for="search") Search:
+        input#search(type="text")
+        input#filter(type="submit",value="Filter")
+    #results
+    script(type="text/javascript")
+      jQuery(document).ready(function($) {
+        $('#form').submit(function() {
+          socket.emit('log_request', {log_file: $('#log_file').val(), search: $('#search').val()});
+          return false;
+        });
+        
+        var socket = new io.connect(window.location.origin);
+
+        socket.on('buffer', function(obj) {
+          var highlight = false;
+          var rx = new RegExp('(' + $('#search').val() + ')', 'g');
+
+          if ($('#search').val()) {
+            highlight = true;
+          }
+
+          for (var i in obj.buffer) {
+            var text = $('<div></div>').text(obj.buffer[i].message).html();
+
+            if (highlight) {
+              text = text.replace(rx, '<span class="highlight">$1</span>');
+            }
+
+            var el = $('<div></div>').html(text);
+            $('#results').append(el);
+          }
+
+          if ($('#auto_scroll').is(':checked')) {
+            window.scroll(0, document.body.offsetHeight);
+          }
+        });
+      
+        socket.on('flush', function(obj) {
+          $('#results').html('');
+        });
+      });

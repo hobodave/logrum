@@ -1,11 +1,12 @@
 {
-  "name" : "logrum",
-  "version" : "0.2.0-beta",
-  "dependencies" : {
-    "socket.io" : "~0.9",
-    "js-yaml" : "~0.3",
-    "glob" : "~3.1",
-    "http-digest" : "~0.1",
-    "mustache" : "~0.4"
+  "name": "logrum",
+  "version": "0.2.0-beta",
+  "dependencies": {
+    "socket.io": "~0.9",
+    "js-yaml": "~0.3",
+    "glob": "~3.1",
+    "http-digest": "~0.1",
+    "mustache": "~0.4",
+    "jade": "~0.21.0"
   }
 }

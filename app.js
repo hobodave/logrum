@@ -8,12 +8,9 @@ var express = require('express')
   , util = require('util')
   , fs = require('fs')
   , url = require('url')
-  , http = require('http')
   , io = require('socket.io')
   , yaml = require('js-yaml')
   , glob = require('glob')
-  , httpdigest = require('http-digest')
-  , Mustache = require('mustache')
   , child = require('child_process');
 
 var app = module.exports = express.createServer();
@@ -88,7 +85,7 @@ io.sockets.on('connection', function(client) {
     active_log: null,
     tail: null
   }
-  
+
   var emit_data = function(data, search) {
     stringdata = restdata + data;
     linedata = stringdata.substr(0, stringdata.lastIndexOf('\n')).split('\n');
@@ -102,7 +99,7 @@ io.sockets.on('connection', function(client) {
       buffer.push({ message: linedata[i] });
     };
     client.emit('buffer', { buffer: buffer });
-    buffer = []        
+    buffer = []
   };
 
   var tail_start = function(active, search) {

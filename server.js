@@ -1,44 +1,36 @@
-
 /**
  * Module dependencies.
  */
 
 var express = require('express')
   , routes = require('./routes')
-  , util = require('util')
   , fs = require('fs')
-  , url = require('url')
-  , io = require('socket.io')
   , yaml = require('js-yaml')
   , glob = require('glob')
-  , child = require('child_process');
+  , child = require('child_process')
+  , app = module.exports = express.createServer()
+  , io = require('socket.io').listen(app)
+  , logs = []
+  , log_opts = []
+  , processes = {}
+  , config = {};
 
-var app = module.exports = express.createServer();
-var io = io.listen(app);
-
-var parseConfig = function(filename) {
+function parseConfig(filename) {
   return yaml.load(fs.readFileSync(filename, 'utf8'));
 };
 
-var config = parseConfig('./config/config.yml');
+config = parseConfig('./config/config.yml');
 
-var logs = [];
+for (var i=0, ilen=config.logs.length; i < ilen; i++) {
+  var files = glob.sync(config.logs[i]), num_logs;
 
-for (var i=0; i < config.logs.length; i++) {
-  files = glob.sync(config.logs[i]);
-
-  for (var j=0; j < files.length; j++) {
+  for (var j=0, jlen=files.length; j < jlen; j++) {
     if (-1 == logs.indexOf(files[j])) {
-      logs.push(files[j]);
+      num_logs = logs.push(files[j]);
+      log_opts.push({idx: num_logs - 1, name: files[j]});
     }
-  };
-};
-
-var log_opts = [];
-
-for (var i=0; i < logs.length; i++) {
-  log_opts.push({idx: i, name: logs[i]});
-};
+  }
+}
 
 // Configuration
 
@@ -66,7 +58,6 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
-
 io.configure('production', function() {
   io.enable('browser client minification');  // send minified client
   io.enable('browser client etag');          // apply etag caching logic based on version number
@@ -88,8 +79,6 @@ app.get('/', routes.index);
 app.listen(config.port);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
-var processes = {};
-
 io.sockets.on('connection', function(client) {
 
   var sessionId = client.sessionId;
@@ -101,26 +90,27 @@ io.sockets.on('connection', function(client) {
     active_search: null,
     tail: null,
     grep: null
-  }
+  };
 
   var emit_data = function(data, search) {
     stringdata = restdata + data;
     linedata = stringdata.substr(0, stringdata.lastIndexOf('\n')).split('\n');
     restdata = stringdata.substr(stringdata.lastIndexOf('\n') + 1);
 
-    buffer = []
+    buffer = [];
+
     for (var i=0; i < linedata.length; i++) {
       if (search && !linedata[i].match(search)) {
         continue;
       }
       buffer.push({ message: linedata[i] });
-    };
+    }
 
     if (buffer.length > 0) {
       client.emit('buffer', { buffer: buffer });
     }
 
-    buffer = []
+    buffer = [];
   };
 
   var tail_start = function(active, search) {
@@ -132,11 +122,11 @@ io.sockets.on('connection', function(client) {
     processes[sessionId].tail.stdout.on("data", function(data) {
         emit_data(data, search);
     });
-  }
+  };
 
   var tail_stop = function() {
     if (processes[sessionId].tail !== null) processes[sessionId].tail.kill();
-  }
+  };
 
   client.on('log_request', function(message) {
     var active = parseInt(message.log_file);

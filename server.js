@@ -14,6 +14,7 @@ var express = require('express')
   , child = require('child_process');
 
 var app = module.exports = express.createServer();
+var io = io.listen(app);
 
 var parseConfig = function(filename) {
   return yaml.load(fs.readFileSync(filename, 'utf8'));
@@ -65,6 +66,21 @@ app.configure('production', function(){
   app.use(express.errorHandler());
 });
 
+
+io.configure('production', function() {
+  io.enable('browser client minification');  // send minified client
+  io.enable('browser client etag');          // apply etag caching logic based on version number
+  io.enable('browser client gzip');          // gzip the file
+  io.set('log level', 1);                    // reduce logging
+  io.set('transports', [                     // enable all transports (optional if you want flashsocket)
+      'websocket'
+    , 'flashsocket'
+    , 'htmlfile'
+    , 'xhr-polling'
+    , 'jsonp-polling'
+  ]);
+});
+
 // Routes
 
 app.get('/', routes.index);
@@ -72,7 +88,6 @@ app.get('/', routes.index);
 app.listen(config.port);
 console.log("Express server listening on port %d in %s mode", app.address().port, app.settings.env);
 
-var io = io.listen(app);
 var processes = {};
 
 io.sockets.on('connection', function(client) {

@@ -1,8 +1,8 @@
 {
   "name": "logrum",
   "description": "A web application for real-time log viewing",
-  "author": "David Abdemoulaie <dave@hobodave.com>",
-  "version": "0.2.0",
+  "author": "David Abdemoulaie <dave@hobodave.com> (http://hobodave.com)",
+  "version": "0.2.1-0",
   "dependencies": {
     "socket.io": "~0.9.2",
     "js-yaml": "~0.3.7",
@@ -10,5 +10,17 @@
     "jade": "~0.21.0",
     "express": "~2.5.8"
   },
-  "engine": "node 0.6.13"
+  "scripts": {
+    "start": "node server.js"
+  },
+  "devDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "node": "~0.6.13"
+  },
+  "homepage": "https://github.com/hobodave/logrum",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hobodave/logrum.git"
+  }
 }

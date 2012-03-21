@@ -1,6 +1,6 @@
 {
   "name": "logrum",
-  "version": "0.2.1-2",
+  "version": "0.2.2",
   "dependencies": {
     "socket.io": {
       "version": "0.9.2",
@@ -58,7 +58,7 @@
           }
         },
         "graceful-fs": {
-          "version": "1.1.6"
+          "version": "1.1.7"
         },
         "inherits": {
           "version": "1.0.0"

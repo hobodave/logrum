@@ -115,7 +115,11 @@ io.sockets.on('connection', function(client) {
       }
       buffer.push({ message: linedata[i] });
     };
-    client.emit('buffer', { buffer: buffer });
+
+    if (buffer.length > 0) {
+      client.emit('buffer', { buffer: buffer });
+    }
+
     buffer = []
   };
 

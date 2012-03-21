@@ -2,7 +2,7 @@
   "name": "logrum",
   "description": "A web application for real-time log viewing",
   "author": "David Abdemoulaie <dave@hobodave.com> (http://hobodave.com)",
-  "version": "0.2.1-1",
+  "version": "0.2.1-2",
   "dependencies": {
     "socket.io": "~0.9.2",
     "js-yaml": "~0.3.7",

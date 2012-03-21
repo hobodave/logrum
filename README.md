@@ -7,23 +7,18 @@ desire to satisfy my curiosity in node.js.
 
 ## Dependencies ##
 
-* node.js
-    * socket.io
-    * express
-    * jade
-    * glob
-    * js-yaml
+See [package.json][3]
 
 ## Steps ##
 
 1. npm install
 2. edit config/config.yml (see config.yml.example)
-3. npm start
+3. NODE\_ENV=production npm start
+
 
 # Caveats #
 
 * client doesn't purge old lines unless you switch log files
-* doesn't seem to work when socket.io fails over to multixhr or longpolling
 
 # TODO #
 
@@ -62,7 +57,6 @@ IN THE SOFTWARE.
 </pre>
 
 
-
-
   [1]: https://github.com/tobi/clarity
   [2]: https://github.com/hobodave/logrum/blob/master/LICENSE
+  [3]: https://github.com/hobodave/logrum/blob/master/package.json

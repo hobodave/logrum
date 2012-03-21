@@ -18,7 +18,7 @@ desire to satisfy my curiosity in node.js.
 
 1. npm install
 2. edit config/config.yml (see config.yml.example)
-3. node app.js
+3. npm start
 
 # Caveats #
 

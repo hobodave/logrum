@@ -1,11 +1,14 @@
 {
   "name": "logrum",
-  "version": "0.2.0-beta",
+  "description": "A web application for real-time log viewing",
+  "author": "David Abdemoulaie <dave@hobodave.com>",
+  "version": "0.2.0",
   "dependencies": {
-    "socket.io": "~0.9",
-    "js-yaml": "~0.3",
-    "glob": "~3.1",
+    "socket.io": "~0.9.2",
+    "js-yaml": "~0.3.7",
+    "glob": "~3.1.7",
     "jade": "~0.21.0",
     "express": "~2.5.8"
-  }
+  },
+  "engine": "node 0.6.13"
 }
